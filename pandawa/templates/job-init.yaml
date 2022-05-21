@@ -1,0 +1,43 @@
+{{- if .Values.init.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "pandawa.fullname" . }}-init
+  labels:
+    {{- include "pandawa.init.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation
+spec:
+  template:
+    metadata:
+      {{- with .Values.init.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "pandawa.init.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ include "pandawa.fullname" . }}-init
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: {{ tpl (toJson .Values.init.command) . }}
+          args: {{ tpl (toJson .Values.init.args) . }}
+          volumeMounts:
+            - name: env
+              readOnly: true
+              mountPath: "/srv/app/.env"
+              subPath: ".env"
+          resources:
+            {{- toYaml .Values.api.resources | nindent 12 }}
+      volumes:
+        - name: env
+          secret:
+            secretName: {{ include "pandawa.fullname" . }}-env
+{{- end }}

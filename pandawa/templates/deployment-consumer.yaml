@@ -1,0 +1,75 @@
+{{- if .Values.consumer.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pandawa.fullname" . }}-consumer
+  labels:
+    {{- include "pandawa.consumer.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.consumer.autoscaling.enabled}}
+  replicas: {{.Values.consumer.replicaCount}}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "pandawa.consumer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.consumer.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "pandawa.consumer.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "pandawa.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.consumer.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "pandawa.fullname" . }}-consumer
+          securityContext:
+            {{- toYaml .Values.consumer.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: {{ tpl (toJson .Values.consumer.command) . }}
+          args: {{ tpl (toJson .Values.consumer.args) . }}
+          volumeMounts:
+            - name: env
+              readOnly: true
+              mountPath: "/srv/app/.env"
+              subPath: ".env"
+            {{- with .Values.consumer.volumeMounts }}
+            {{- tpl (toYaml .) $ | nindent 12 -}}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.consumer.resources | nindent 12 }}
+        {{- with .Values.consumer.sidecars }}
+        {{- tpl (toYaml .) $ | nindent 8 -}}
+        {{- end }}
+      volumes:
+        - name: env
+          secret:
+            secretName: {{ include "pandawa.fullname" . }}-env
+        {{- with .Values.consumer.volumes }}
+        {{- tpl (toYaml .) $ | nindent 8 -}}
+        {{- end }}
+      {{- with .Values.consumer.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.consumer.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.consumer.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.consumer.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

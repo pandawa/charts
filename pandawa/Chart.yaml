@@ -1,0 +1,6 @@
+apiVersion: v2
+name: pandawa
+description: A Helm chart for pandawa framework
+type: application
+version: 1.0.23
+appVersion: "1.0.0"

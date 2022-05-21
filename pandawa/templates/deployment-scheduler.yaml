@@ -1,0 +1,69 @@
+{{- if .Values.scheduler.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "pandawa.fullname" . }}-scheduler
+  labels:
+    {{- include "pandawa.scheduler.labels" . | nindent 4 }}
+spec:
+  replicas: {{.Values.scheduler.replicaCount}}
+  selector:
+    matchLabels:
+      {{- include "pandawa.scheduler.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.scheduler.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "pandawa.scheduler.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "pandawa.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.scheduler.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ include "pandawa.fullname" . }}-scheduler
+          securityContext:
+            {{- toYaml .Values.scheduler.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: {{ tpl (toJson .Values.scheduler.command) . }}
+          args: {{ tpl (toJson .Values.scheduler.args) . }}
+          volumeMounts:
+            - name: env
+              readOnly: true
+              mountPath: "/srv/app/.env"
+              subPath: ".env"
+            {{- with .Values.scheduler.volumeMounts }}
+            {{- tpl (toYaml .) $ | nindent 12 -}}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.scheduler.resources | nindent 12 }}
+        {{- with .Values.scheduler.sidecars }}
+        {{- tpl (toYaml .) $ | nindent 8 -}}
+        {{- end }}
+      volumes:
+        - name: env
+          secret:
+            secretName: {{ include "pandawa.fullname" . }}-env
+        {{- with .Values.scheduler.volumes }}
+        {{- tpl (toYaml .) $ | nindent 8 -}}
+        {{- end }}
+      {{- with .Values.scheduler.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.scheduler.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.scheduler.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}

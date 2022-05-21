@@ -1,0 +1,167 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: pandawa/pandawa
+  pullPolicy: IfNotPresent
+  tag: ""
+
+init:
+  enabled: true
+  command: ["docker-entrypoint"]
+  args:
+    - "php"
+    - "artisan"
+    - "migrate"
+  resources: {}
+  podAnnotations: {}
+
+api:
+  replicaCount: 1
+  command: ["docker-entrypoint"]
+  workersCount: 2
+  taskWorkersCount: 1
+  port: 80
+  host: "0.0.0.0"
+  server: "swoole"
+  args:
+    - "php"
+    - "artisan"
+    - "octane:start"
+    - "--server={{ .Values.api.server }}"
+    - "--host={{ .Values.api.host }}"
+    - "--port={{ .Values.api.port }}"
+    - "--workers={{ .Values.api.workersCount }}"
+    - "--task-workers={{ .Values.api.taskWorkersCount }}"
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+  livenessProbe:
+    httpGet:
+      path: /v1/ping
+      port: http
+    initialDelaySeconds: 60
+    periodSeconds: 10
+    timeoutSeconds: 5
+  readinessProbe:
+    httpGet:
+      path: /v1/ping
+      port: http
+    initialDelaySeconds: 10
+    periodSeconds: 10
+    timeoutSeconds: 5
+  sidecars: []
+  volumes: []
+  volumeMounts: []
+  resources: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []
+
+worker:
+  enabled: true
+  replicaCount: 1
+  command: ["docker-entrypoint"]
+  args:
+    - "php"
+    - "artisan"
+    - "horizon"
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+  sidecars: []
+  volumes: []
+  volumeMounts: []
+  resources: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []
+
+consumer:
+  enabled: false
+  replicaCount: 1
+  topics: ""
+  queue: "arjuna"
+  command: ["docker-entrypoint"]
+  args:
+    - "php"
+    - "artisan"
+    - "arjuna:consume"
+    - "{{ .Values.consumer.topics }}"
+    - "--queue={{ .Values.consumer.queue }}"
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 100
+    targetCPUUtilizationPercentage: 80
+  sidecars: []
+  volumes: []
+  volumeMounts: []
+  resources: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+  topologySpreadConstraints: []
+
+scheduler:
+  enabled: false
+  replicaCount: 1
+  command: ["docker-entrypoint"]
+  args:
+    - "php"
+    - "artisan"
+    - "schedule:work"
+  sidecars: []
+  volumes: []
+  volumeMounts: []
+  resources: {}
+  podAnnotations: {}
+  podSecurityContext: {}
+  securityContext: {}
+  nodeSelector: {}
+  tolerations: []
+  affinity: {}
+
+serviceAccount:
+  create: false
+  annotations: {}
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  stripPrefixes: []
+
+env: |
+  APP_ENV=prod
+  APP_DEBUG=false
+  APP_LOG_LEVEL=debug
+  LOG_CHANNEL=daily
+
+imagePullSecrets: []
