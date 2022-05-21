@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  pandawa:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-05-21T16:31:10.63264+07:00"
+    description: A Helm chart for pandawa framework
+    digest: a6bbea3d415250c7520ef772d416ea4b9b2bf2e94ba9fbcf2dac45d3a1f5149b
+    name: pandawa
+    type: application
+    urls:
+    - pandawa-1.0.23.tgz
+    version: 1.0.23
+generated: "2022-05-21T16:31:10.631599+07:00"
