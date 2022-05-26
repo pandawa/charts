@@ -1,5 +1,5 @@
 {{- if .Values.consumer.autoscaling.enabled }}
-apiVersion: autoscaling/v2beta1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "pandawa.fullname" . }}-consumer
@@ -17,12 +17,16 @@ spec:
     - type: Resource
       resource:
         name: cpu
-        targetAverageUtilization: {{ .Values.consumer.autoscaling.targetCPUUtilizationPercentage }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.consumer.autoscaling.targetCPUUtilizationPercentage }}
     {{- end }}
     {{- if .Values.consumer.autoscaling.targetMemoryUtilizationPercentage }}
     - type: Resource
       resource:
         name: memory
-        targetAverageUtilization: {{ .Values.consumer.autoscaling.targetMemoryUtilizationPercentage }}
+        target:
+          type: Utilization
+          averageUtilization: {{ .Values.consumer.autoscaling.targetMemoryUtilizationPercentage }}
     {{- end }}
 {{- end }}
