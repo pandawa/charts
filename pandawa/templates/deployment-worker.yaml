@@ -32,8 +32,8 @@ spec:
         - name: {{ include "pandawa.fullname" . }}-worker
           securityContext:
             {{- toYaml .Values.worker.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ (.Values.worker.image | default .Values.image).repository }}:{{ (.Values.worker.image | default .Values.image).tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ (.Values.worker.image | default .Values.image).pullPolicy | default "IfNotPresent" }}
           command: {{ tpl (toJson .Values.worker.command) . }}
           args: {{ tpl (toJson .Values.worker.args) . }}
           volumeMounts:

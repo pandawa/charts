@@ -30,8 +30,8 @@ spec:
         - name: {{ include "pandawa.fullname" . }}-scheduler
           securityContext:
             {{- toYaml .Values.scheduler.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ (.Values.scheduler.image | default .Values.image).repository }}:{{ (.Values.scheduler.image | default .Values.image).tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ (.Values.scheduler.image | default .Values.image).pullPolicy | default "IfNotPresent" }}
           command: {{ tpl (toJson .Values.scheduler.command) . }}
           args: {{ tpl (toJson .Values.scheduler.args) . }}
           volumeMounts:

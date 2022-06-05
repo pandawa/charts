@@ -32,8 +32,8 @@ spec:
         - name: {{ include "pandawa.fullname" . }}-consumer
           securityContext:
             {{- toYaml .Values.consumer.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ (.Values.consumer.image | default .Values.image).repository }}:{{ (.Values.consumer.image | default .Values.image).tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ (.Values.consumer.image | default .Values.image).pullPolicy | default "IfNotPresent" }}
           command: {{ tpl (toJson .Values.consumer.command) . }}
           args: {{ tpl (toJson .Values.consumer.args) . }}
           volumeMounts:

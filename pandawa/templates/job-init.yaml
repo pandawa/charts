@@ -25,8 +25,8 @@ spec:
       {{- end }}
       containers:
         - name: {{ include "pandawa.fullname" . }}-init
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: "{{ (.Values.init.image | default .Values.image).repository }}:{{ (.Values.init.image | default .Values.image).tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ (.Values.init.image | default .Values.image).pullPolicy | default "IfNotPresent" }}
           command: {{ tpl (toJson .Values.init.command) . }}
           args: {{ tpl (toJson .Values.init.args) . }}
           volumeMounts:
