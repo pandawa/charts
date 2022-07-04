@@ -44,6 +44,14 @@ spec:
             {{- with .Values.worker.volumeMounts }}
             {{- tpl (toYaml .) $ | nindent 12 -}}
             {{- end }}
+          {{- with .Values.worker.livenessProbe }}
+          livenessProbe:
+            {{- tpl (toYaml .) $ | nindent 12 -}}
+          {{- end }}
+          {{- with .Values.worker.readinessProbe }}
+          readinessProbe:
+            {{- tpl (toYaml .) $ | nindent 12 -}}
+          {{- end }}
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
         {{- with .Values.worker.sidecars }}

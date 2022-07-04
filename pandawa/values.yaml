@@ -77,6 +77,8 @@ worker:
     minReplicas: 1
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
+  livenessProbe: null
+  readinessProbe: null
   sidecars: []
   volumes: []
   volumeMounts: []
@@ -106,6 +108,8 @@ consumer:
     minReplicas: 1
     maxReplicas: 100
     targetCPUUtilizationPercentage: 80
+  livenessProbe: null
+  readinessProbe: null
   sidecars: []
   volumes: []
   volumeMounts: []
@@ -126,6 +130,8 @@ scheduler:
     - "php"
     - "artisan"
     - "schedule:work"
+  livenessProbe: null
+  readinessProbe: null
   sidecars: []
   volumes: []
   volumeMounts: []
