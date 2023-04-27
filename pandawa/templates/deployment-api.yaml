@@ -5,6 +5,8 @@ metadata:
   name: {{ include "pandawa.fullname" . }}-api
   labels:
     {{- include "pandawa.api.labels" . | nindent 4 }}
+  annotations:
+    checksum/env: {{ include (print .Template.BasePath "/secret-env.yaml") . | sha256sum }}
 spec:
   {{- if not .Values.api.autoscaling.enabled}}
   replicas: {{.Values.api.replicaCount}}
@@ -40,6 +42,11 @@ spec:
             - name: http
               containerPort: 80
               protocol: TCP
+          envFrom:
+            {{- if .Values.configEnv }}
+            - configMapRef:
+                name: {{ include "pandawa.fullname" . }}-config-env
+            {{- end }}
           volumeMounts:
             - name: env
               readOnly: true

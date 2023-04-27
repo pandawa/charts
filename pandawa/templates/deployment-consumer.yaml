@@ -5,6 +5,8 @@ metadata:
   name: {{ include "pandawa.fullname" . }}-consumer
   labels:
     {{- include "pandawa.consumer.labels" . | nindent 4 }}
+  annotations:
+    checksum/env: {{ include (print .Template.BasePath "/secret-env.yaml") . | sha256sum }}
 spec:
   {{- if not .Values.consumer.autoscaling.enabled}}
   replicas: {{.Values.consumer.replicaCount}}
@@ -36,6 +38,11 @@ spec:
           imagePullPolicy: {{ (.Values.consumer.image | default .Values.image).pullPolicy | default "IfNotPresent" }}
           command: {{ tpl (toJson .Values.consumer.command) . }}
           args: {{ tpl (toJson .Values.consumer.args) . }}
+          envFrom:
+            {{- if .Values.configEnv }}
+            - configMapRef:
+                name: {{ include "pandawa.fullname" . }}-config-env
+            {{- end }}
           volumeMounts:
             - name: env
               readOnly: true

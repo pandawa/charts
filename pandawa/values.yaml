@@ -178,4 +178,6 @@ env: |
   APP_LOG_LEVEL=debug
   LOG_CHANNEL=daily
 
+configEnv: {}
+
 imagePullSecrets: []

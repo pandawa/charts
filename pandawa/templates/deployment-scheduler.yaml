@@ -5,6 +5,8 @@ metadata:
   name: {{ include "pandawa.fullname" . }}-scheduler
   labels:
     {{- include "pandawa.scheduler.labels" . | nindent 4 }}
+  annotations:
+    checksum/env: {{ include (print .Template.BasePath "/secret-env.yaml") . | sha256sum }}
 spec:
   replicas: {{.Values.scheduler.replicaCount}}
   selector:
@@ -34,6 +36,11 @@ spec:
           imagePullPolicy: {{ (.Values.scheduler.image | default .Values.image).pullPolicy | default "IfNotPresent" }}
           command: {{ tpl (toJson .Values.scheduler.command) . }}
           args: {{ tpl (toJson .Values.scheduler.args) . }}
+          envFrom:
+            {{- if .Values.configEnv }}
+            - configMapRef:
+                name: {{ include "pandawa.fullname" . }}-config-env
+            {{- end }}
           volumeMounts:
             - name: env
               readOnly: true
