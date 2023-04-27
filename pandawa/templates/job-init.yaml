@@ -31,7 +31,7 @@ spec:
           args: {{ tpl (toJson .Values.init.args) . }}
           envFrom:
             {{- if .Values.configEnv }}
-            - configMapRef:
+            - secretRef:
                 name: {{ include "pandawa.fullname" . }}-config-env
             {{- end }}
           volumeMounts:
