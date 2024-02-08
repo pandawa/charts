@@ -43,8 +43,12 @@ spec:
               containerPort: 80
               protocol: TCP
           envFrom:
-            {{- if .Values.configEnv }}
+            {{- if .Values.secretEnv }}
             - secretRef:
+                name: {{ include "pandawa.fullname" . }}-secret-env
+            {{- end }}
+            {{- if .Values.configEnv }}
+            - configMapRef:
                 name: {{ include "pandawa.fullname" . }}-config-env
             {{- end }}
           volumeMounts:

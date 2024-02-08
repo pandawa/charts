@@ -37,8 +37,12 @@ spec:
           command: {{ tpl (toJson .Values.scheduler.command) . }}
           args: {{ tpl (toJson .Values.scheduler.args) . }}
           envFrom:
-            {{- if .Values.configEnv }}
+            {{- if .Values.secretEnv }}
             - secretRef:
+                name: {{ include "pandawa.fullname" . }}-secret-env
+            {{- end }}
+            {{- if .Values.configEnv }}
+            - configMapRef:
                 name: {{ include "pandawa.fullname" . }}-config-env
             {{- end }}
           volumeMounts:

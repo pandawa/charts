@@ -180,4 +180,6 @@ env: |
 
 configEnv: {}
 
+secretEnv: {}
+
 imagePullSecrets: []
