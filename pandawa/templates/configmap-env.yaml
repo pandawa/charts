@@ -1,6 +1,6 @@
 {{- if .Values.configEnv }}
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
   name: {{ include "pandawa.fullname" . }}-config-env
   labels:
