@@ -11,6 +11,10 @@ spec:
   {{- if not .Values.consumer.autoscaling.enabled}}
   replicas: {{.Values.consumer.replicaCount}}
   {{- end }}
+  {{- with .Values.consumer.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "pandawa.consumer.selectorLabels" . | nindent 6 }}

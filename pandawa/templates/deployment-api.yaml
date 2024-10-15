@@ -11,6 +11,10 @@ spec:
   {{- if not .Values.api.autoscaling.enabled}}
   replicas: {{.Values.api.replicaCount}}
   {{- end }}
+  {{- with .Values.api.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "pandawa.api.selectorLabels" . | nindent 6 }}
