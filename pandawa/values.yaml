@@ -34,6 +34,10 @@ api:
     - "--port={{ .Values.api.port }}"
     - "--workers={{ .Values.api.workersCount }}"
     - "--task-workers={{ .Values.api.taskWorkersCount }}"
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "50%"
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -80,6 +84,10 @@ worker:
     - "php"
     - "artisan"
     - "horizon"
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "50%"
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -111,6 +119,10 @@ consumer:
     - "arjuna:consume"
     - "{{ .Values.consumer.topics }}"
     - "--queue={{ .Values.consumer.queue }}"
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "50%"
   autoscaling:
     enabled: false
     minReplicas: 1
@@ -138,6 +150,10 @@ scheduler:
     - "php"
     - "artisan"
     - "schedule:work"
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: "50%"
   livenessProbe: null
   readinessProbe: null
   sidecars: []

@@ -9,6 +9,10 @@ metadata:
     checksum/env: {{ include (print .Template.BasePath "/secret-env.yaml") . | sha256sum }}
 spec:
   replicas: {{.Values.scheduler.replicaCount}}
+  {{- with .Values.scheduler.updateStrategy }}
+  strategy:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "pandawa.scheduler.selectorLabels" . | nindent 6 }}
