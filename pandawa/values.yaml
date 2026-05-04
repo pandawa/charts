@@ -19,6 +19,7 @@ init:
 api:
   enabled: true
   replicaCount: 1
+  terminationGracePeriodSeconds: 30
   command: ["docker-entrypoint"]
   workersCount: 2
   taskWorkersCount: 1
@@ -79,6 +80,7 @@ api:
 worker:
   enabled: true
   replicaCount: 1
+  terminationGracePeriodSeconds: 30
   command: ["docker-entrypoint"]
   args:
     - "php"
@@ -110,6 +112,7 @@ worker:
 consumer:
   enabled: false
   replicaCount: 1
+  terminationGracePeriodSeconds: 30
   topics: ""
   queue: "arjuna"
   command: ["docker-entrypoint"]
@@ -145,6 +148,7 @@ consumer:
 scheduler:
   enabled: false
   replicaCount: 1
+  terminationGracePeriodSeconds: 30
   command: ["docker-entrypoint"]
   args:
     - "php"
