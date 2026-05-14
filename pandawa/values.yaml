@@ -192,11 +192,7 @@ ingress:
   tls: []
   stripPrefixes: []
 
-env: |
-  APP_ENV=prod
-  APP_DEBUG=false
-  APP_LOG_LEVEL=debug
-  LOG_CHANNEL=daily
+env: ""
 
 configEnv: {}
 
