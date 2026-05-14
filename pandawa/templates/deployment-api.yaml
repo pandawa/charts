@@ -62,10 +62,12 @@ spec:
             {{- toYaml . | nindent 12 }}
             {{- end }}
           volumeMounts:
+            {{- if .Values.env }}
             - name: env
               readOnly: true
               mountPath: "/srv/app/.env"
               subPath: ".env"
+            {{- end }}
             {{- with .Values.api.volumeMounts }}
             {{- tpl (toYaml .) $ | nindent 12 -}}
             {{- end }}
@@ -83,9 +85,11 @@ spec:
         {{- tpl (toYaml .) $ | nindent 8 -}}
         {{- end }}
       volumes:
+        {{- if .Values.env }}
         - name: env
           secret:
             secretName: {{ include "pandawa.fullname" . }}-env
+        {{- end }}
         {{- with .Values.api.volumes }}
         {{- tpl (toYaml .) $ | nindent 8 -}}
         {{- end }}
