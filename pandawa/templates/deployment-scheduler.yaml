@@ -52,6 +52,9 @@ spec:
             - configMapRef:
                 name: {{ include "pandawa.fullname" . }}-config-env
             {{- end }}
+            {{- with .Values.extraEnvFrom }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           volumeMounts:
             - name: env
               readOnly: true
