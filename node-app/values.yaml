@@ -83,6 +83,10 @@ externalSecret: {}
 
 imagePullSecrets: []
 
+podSecurityContext: {}
+
+securityContext: {}
+
 serviceAccount:
   create: false
   name: ""
