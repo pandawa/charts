@@ -1,0 +1,12 @@
+{{- if .Values.configEnv }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "node-app.fullname" . }}-config-env
+  labels:
+    {{- include "node-app.labels" . | nindent 4 }}
+data:
+  {{- range $key, $value := .Values.configEnv }}
+  {{ $key }}: {{ $value | toString | quote }}
+  {{- end }}
+{{- end }}
