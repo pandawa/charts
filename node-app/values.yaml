@@ -61,6 +61,17 @@ persistence:
     - ReadWriteOnce
   size: 1Gi
 
+strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: "50%"
+    maxUnavailable: 0
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: ""
+  maxUnavailable: ""
+
 podAnnotations:
   reloader.stakater.com/auto: "true"
 
