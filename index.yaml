@@ -3,7 +3,17 @@ entries:
   pandawa:
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.28642+07:00"
+    created: "2026-05-15T11:17:34.171217+07:00"
+    description: A Helm chart for pandawa framework
+    digest: 7956e5d2f732e0016ba7caf94af566a086ef9ae6c720af4f7fb05c122990122a
+    name: pandawa
+    type: application
+    urls:
+    - pandawa-1.3.2.tgz
+    version: 1.3.2
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2026-05-15T11:17:34.170728+07:00"
     description: A Helm chart for pandawa framework
     digest: 4f94888af075bd8b53a0d3f0ebaed883a73522f82486286d822dd7e2ba515430
     name: pandawa
@@ -13,7 +23,7 @@ entries:
     version: 1.3.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.285916+07:00"
+    created: "2026-05-15T11:17:34.169982+07:00"
     description: A Helm chart for pandawa framework
     digest: 541bd69ccd55872a05fa4178864ccd1f407b465bb5299102db411785bde5f4cd
     name: pandawa
@@ -23,7 +33,7 @@ entries:
     version: 1.3.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.284929+07:00"
+    created: "2026-05-15T11:17:34.168925+07:00"
     description: A Helm chart for pandawa framework
     digest: 02a803be7555c29d45b8abb37909dde0a7daac7803184a2673e1e9362daf9085
     name: pandawa
@@ -33,7 +43,7 @@ entries:
     version: 1.2.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.284534+07:00"
+    created: "2026-05-15T11:17:34.168522+07:00"
     description: A Helm chart for pandawa framework
     digest: 3e3924ca0db0e9c5b2fd77180f7fd68b5060477f9c5d4d06e47fa564e0eb5ad9
     name: pandawa
@@ -43,7 +53,7 @@ entries:
     version: 1.1.3
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.284095+07:00"
+    created: "2026-05-15T11:17:34.168078+07:00"
     description: A Helm chart for pandawa framework
     digest: dca8643290547989acf95eda159983cdb5f34facfbdfca0e993e438a653b0b66
     name: pandawa
@@ -53,7 +63,7 @@ entries:
     version: 1.1.2
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.28368+07:00"
+    created: "2026-05-15T11:17:34.167647+07:00"
     description: A Helm chart for pandawa framework
     digest: 0422c7002d773ee28d59d5b2a8786adc8fc410613379cc89623c87a4a8c8cc88
     name: pandawa
@@ -63,7 +73,7 @@ entries:
     version: 1.1.1
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.283285+07:00"
+    created: "2026-05-15T11:17:34.167231+07:00"
     description: A Helm chart for pandawa framework
     digest: 8b2b266ceb10599cc1388f94a4c6f44fd18e501f00e3b73a334122eb42f4dca5
     name: pandawa
@@ -73,7 +83,7 @@ entries:
     version: 1.1.0
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.282892+07:00"
+    created: "2026-05-15T11:17:34.166807+07:00"
     description: A Helm chart for pandawa framework
     digest: 94d25b2f91d433d267412b3b0899e73e60f7cf9fbd334b869cb987b1387268f1
     name: pandawa
@@ -83,7 +93,7 @@ entries:
     version: 1.0.28
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.282489+07:00"
+    created: "2026-05-15T11:17:34.166381+07:00"
     description: A Helm chart for pandawa framework
     digest: ef2d0613ed744ae4e534b2e8f2420d451a4b7a11f3b71d46d25e5a5c8562b198
     name: pandawa
@@ -93,7 +103,7 @@ entries:
     version: 1.0.27
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.282064+07:00"
+    created: "2026-05-15T11:17:34.16592+07:00"
     description: A Helm chart for pandawa framework
     digest: 4c51ec56b433ea5c74955730bbc39a0fef2e1ecb77f608f6b6f32a47f5099eec
     name: pandawa
@@ -103,7 +113,7 @@ entries:
     version: 1.0.26
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.281434+07:00"
+    created: "2026-05-15T11:17:34.164747+07:00"
     description: A Helm chart for pandawa framework
     digest: 80204b3d4b041c8039cd4672c69a57c4e72eed3001b82f5320f8da14f3c39a11
     name: pandawa
@@ -113,7 +123,7 @@ entries:
     version: 1.0.25
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.280237+07:00"
+    created: "2026-05-15T11:17:34.164336+07:00"
     description: A Helm chart for pandawa framework
     digest: 68a661b6163dbf0eea6bb27fdc8d20167cd8a6ea8aff1896fcdf7dd9cfc1e0ca
     name: pandawa
@@ -123,7 +133,7 @@ entries:
     version: 1.0.24
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-05-14T23:02:10.279848+07:00"
+    created: "2026-05-15T11:17:34.163909+07:00"
     description: A Helm chart for pandawa framework
     digest: 30aa2c649d04d37a0f320dfb7114813ec81b7524535e00c23b012bc69211bb87
     name: pandawa
@@ -131,4 +141,4 @@ entries:
     urls:
     - pandawa-1.0.23.tgz
     version: 1.0.23
-generated: "2026-05-14T23:02:10.279345+07:00"
+generated: "2026-05-15T11:17:34.163342+07:00"
