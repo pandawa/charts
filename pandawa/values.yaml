@@ -202,4 +202,11 @@ extraEnvFrom: []
 
 externalSecret: {}
 
+argocd:
+  enabled: false
+  syncWave:
+    dependencies: "-1"
+    init: "1"
+    workloads: "5"
+
 imagePullSecrets: []
